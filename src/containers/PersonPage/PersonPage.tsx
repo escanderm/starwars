@@ -7,6 +7,8 @@ import { getPeopleImage } from '../../services/getPeopleData'
 import PersonInfo from '../../components/PersonPage/PersonInfo'
 import PersonPhoto from '../../components/PersonPage/PersonPhoto'
 import styles from './PersonPage.module.css'
+import PersonLinkBack from '../../components/PersonPage/PersonLinkBack'
+import PersonFilms from '../../components/PersonPage/PersonFilms'
 
 type PersonPageProps = {
   setErrorApi: (errorApi: boolean) => {}
@@ -21,6 +23,7 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
   const [personInfo, setPersonInfo] = useState<ResStateData[] | null>(null)
   const [personName, setPersonName] = useState<string | null>(null)
   const [personPhoto, setPersonPhoto] = useState<string | null>(null)
+  const [personFilms, setPersonFilms] = useState(null)
   const { id } = useParams<any>()
   useEffect(() => {
     ;(async () => {
@@ -38,9 +41,7 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
 
         id && setPersonPhoto(getPeopleImage(id))
 
-        /*
-          films: []
-         */
+        res.films.length && setPersonFilms(res.films)
 
         setErrorApi(false)
       } else {
@@ -50,16 +51,20 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
   }, [])
 
   return (
-    <div className={styles.wrapper}>
-      <span className={styles.person__name}>{personName && personName}</span>
+    <>
+      <PersonLinkBack />
+      <div className={styles.wrapper}>
+        <span className={styles.person__name}>{personName && personName}</span>
 
-      <div className={styles.container}>
-        {personName && personPhoto && (
-          <PersonPhoto personPhoto={personPhoto} personName={personName} />
-        )}
-        {personInfo && <PersonInfo personInfo={personInfo} />}
+        <div className={styles.container}>
+          {personName && personPhoto && (
+            <PersonPhoto personPhoto={personPhoto} personName={personName} />
+          )}
+          {personInfo && <PersonInfo personInfo={personInfo} />}
+          {personFilms && <PersonFilms personFilms={personFilms} />}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

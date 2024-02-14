@@ -19,3 +19,13 @@ export const getApiResource = async (url: string) => {
 export const changeHTTP = (url: string): string | null => {
   return url ? url.replace(HTTP, HTTPS) : url
 }
+
+export const makeConcurrentRequest = async (urls: []) => {
+  const res = await Promise.all(
+    urls.map(async (res) => {
+      return fetch(res).then((res) => res.json())
+    })
+  )
+
+  return res
+}
