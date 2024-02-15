@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { getApiResource } from '../../utils/network'
 import { API_PERSON } from '../../constants/api'
 import { withErrorApi } from '../../hoc-helper/withErrorApi'
@@ -8,7 +8,11 @@ import PersonInfo from '../../components/PersonPage/PersonInfo'
 import PersonPhoto from '../../components/PersonPage/PersonPhoto'
 import styles from './PersonPage.module.css'
 import PersonLinkBack from '../../components/PersonPage/PersonLinkBack'
-import PersonFilms from '../../components/PersonPage/PersonFilms'
+import UiLoading from '../../components/UI/UiLoading'
+
+/* Lazy */
+//import PersonFilms from '../../components/PersonPage/PersonFilms'
+const PersonFilms = React.lazy(() => import('../../components/PersonPage/PersonFilms'))
 
 type PersonPageProps = {
   setErrorApi: (errorApi: boolean) => {}
@@ -24,7 +28,9 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
   const [personName, setPersonName] = useState<string | null>(null)
   const [personPhoto, setPersonPhoto] = useState<string | null>(null)
   const [personFilms, setPersonFilms] = useState(null)
+
   const { id } = useParams<any>()
+
   useEffect(() => {
     ;(async () => {
       const res = await getApiResource(`${API_PERSON}/${id}/`)
@@ -61,7 +67,13 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
             <PersonPhoto personPhoto={personPhoto} personName={personName} />
           )}
           {personInfo && <PersonInfo personInfo={personInfo} />}
-          {personFilms && <PersonFilms personFilms={personFilms} />}
+          {personFilms && (
+            <>
+              <Suspense fallback={<UiLoading />}>
+                <PersonFilms personFilms={personFilms} />
+              </Suspense>
+            </>
+          )}
         </div>
       </div>
     </>

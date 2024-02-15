@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { makeConcurrentRequest } from '../../../utils/network'
+import styles from './PersonFilms.module.css'
 
 type Props = {
   personFilms: []
@@ -19,17 +20,19 @@ const PersonFilms: FC<Props> = ({ personFilms }) => {
   }, [])
 
   return (
-    <ul>
-      {filmsName
-        .sort((a, z) => a.episode_id - z.episode_id)
-        .map(({ title, episode_id }) => (
-          <li key={episode_id}>
-            <span>Episode {episode_id}</span>
-            <span> : </span>
-            <span>{title}</span>
-          </li>
-        ))}
-    </ul>
+    <div className={styles.wrapper}>
+      <ul className={styles.list__container}>
+        {filmsName
+          .sort((a, z) => a.episode_id - z.episode_id)
+          .map(({ title, episode_id }) => (
+            <li key={episode_id} className={styles.list__item}>
+              <span className={styles.item__episode}>Episode {episode_id}</span>
+              <span className={styles.item__colon}> : </span>
+              <span className={styles.item__title}>{title}</span>
+            </li>
+          ))}
+      </ul>
+    </div>
   )
 }
 
