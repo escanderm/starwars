@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom'
 import React, { Suspense, useEffect, useState } from 'react'
 import { getApiResource } from '../../utils/network'
 import { API_PERSON } from '../../constants/api'
@@ -9,6 +8,9 @@ import PersonPhoto from '../../components/PersonPage/PersonPhoto'
 import styles from './PersonPage.module.css'
 import PersonLinkBack from '../../components/PersonPage/PersonLinkBack'
 import UiLoading from '../../components/UI/UiLoading'
+import { useSelector } from 'react-redux'
+import { ActionProps } from '../../store/reducers/favoriteReducer'
+import { useParams } from 'react-router'
 
 /* Lazy */
 //import PersonFilms from '../../components/PersonPage/PersonFilms'
@@ -17,20 +19,24 @@ const PersonFilms = React.lazy(() => import('../../components/PersonPage/PersonF
 type PersonPageProps = {
   setErrorApi: (errorApi: boolean) => {}
 }
-
+export interface IState {
+  favoriteReducer: ActionProps[]
+}
 interface ResStateData {
   title: string
   data: string
 }
 
 const PersonPage = ({ setErrorApi }: PersonPageProps) => {
+  const [personId, setPersonId] = useState<number | string>('')
   const [personInfo, setPersonInfo] = useState<ResStateData[] | null>(null)
   const [personName, setPersonName] = useState<string | null>(null)
   const [personPhoto, setPersonPhoto] = useState<string | null>(null)
   const [personFilms, setPersonFilms] = useState(null)
+  const [personFavorite, setPersonFavorite] = useState(false)
 
-  const { id } = useParams<any>()
-
+  const storeData = useSelector((state: IState) => state.favoriteReducer)
+  const { id } = useParams<string>()
   useEffect(() => {
     ;(async () => {
       const res = await getApiResource(`${API_PERSON}/${id}/`)
@@ -44,6 +50,10 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
           { title: 'Mass', data: res.mass }
         ])
         setPersonName(res.name)
+
+        id && (storeData[+id] ? setPersonFavorite(true) : setPersonFavorite(false))
+
+        id && setPersonId(+id)
 
         id && setPersonPhoto(getPeopleImage(id))
 
@@ -64,7 +74,13 @@ const PersonPage = ({ setErrorApi }: PersonPageProps) => {
 
         <div className={styles.container}>
           {personName && personPhoto && (
-            <PersonPhoto personPhoto={personPhoto} personName={personName} />
+            <PersonPhoto
+              personPhoto={personPhoto}
+              personName={personName}
+              personId={personId}
+              personFavorite={personFavorite}
+              setPersonFavorite={setPersonFavorite}
+            />
           )}
           {personInfo && <PersonInfo personInfo={personInfo} />}
           {personFilms && (

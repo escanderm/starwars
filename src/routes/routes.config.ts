@@ -3,12 +3,18 @@ import PeoplePage from '../containers/PeaplePage'
 import { IRouterData } from '../interfaces'
 import NotFoundPage from '../containers/NotFoundPage'
 import PersonPage from '../containers/PersonPage'
+import FavoritePage from '../containers/FavoritePage'
 
 const routesConfig: IRouterData[] = [
   {
     element: HomePage,
     exact: true,
     path: '/'
+  },
+  {
+    element: FavoritePage,
+    path: '/favorites',
+    exact: true
   },
   {
     element: PeoplePage,

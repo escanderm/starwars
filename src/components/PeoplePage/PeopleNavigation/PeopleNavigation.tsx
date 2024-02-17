@@ -21,7 +21,7 @@ const PeopleNavigation: FC<PeopleNavigationProps> = ({
   }
   const handleChangePrev = () => {
     if (!prevPage) return
-    getResource(prevPage).then((r) => false)
+    getResource(prevPage).then(() => false)
   }
 
   return (
