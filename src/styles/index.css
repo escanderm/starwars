@@ -43,8 +43,18 @@
           0 6px 30px 5px rgba(0, 0, 0, 0.1),
           0 8px 10px -5px rgba(0, 0, 0, 0.2);
 
-  --theme-default-header: #cccc46;
-  --theme-default-bgimage: url('../static/bg.jpg');
+  /* THEMES */
+  --theme-light-header: #dfe2df;
+  --theme-dark-header: #ca6c6f;
+  --theme-neutral-header: #cccc46;
+
+  --theme-light-bgimage: linear-gradient(to right bottom, #041125, #0f2d4d, #174b79, #176ba8, #008eda);
+  --theme-dark-bgimage: linear-gradient(to right bottom, #000000, #30171d, #5b2331, #8a3043, #bc3d53);
+  --theme-neutral-bgimage: url('../static/bg.jpg');
+
+
+  --theme-default-header: var(--theme-neutral-header);
+  --theme-default-bgimage: var(--theme-neutral-bgimage);
 }
 
 body {
