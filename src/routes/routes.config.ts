@@ -5,6 +5,7 @@ import NotFoundPage from '../containers/NotFoundPage'
 import PersonPage from '../containers/PersonPage'
 import FavoritePage from '../containers/FavoritePage'
 import SearchPage from '../containers/SearchPage'
+import ErrorMessage from '../components/ErrorMessage'
 
 const routesConfig: IRouterData[] = [
   {
@@ -30,6 +31,11 @@ const routesConfig: IRouterData[] = [
   {
     element: NotFoundPage,
     path: '/not-found',
+    exact: true
+  },
+  {
+    element: ErrorMessage,
+    path: '/fail',
     exact: true
   },
   {

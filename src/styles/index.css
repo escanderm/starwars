@@ -85,3 +85,25 @@ img {
 *, *:after, *:before {
   box-sizing: border-box;
 }
+
+/****************
+SCROLL
+/****************/
+* {
+  scrollbar-color: var(--color-yellow);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-yellow) rgba(0,0,0,.7);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,.7);
+}
+::-webkit-scrollbar-corner {
+  background-color: rgba(0,0,0,.7);
+}
