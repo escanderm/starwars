@@ -81,3 +81,7 @@ img {
   color: var(--theme-default-header);
   transition: color var(--transition);
 }
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}

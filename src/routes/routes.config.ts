@@ -4,6 +4,7 @@ import { IRouterData } from '../interfaces'
 import NotFoundPage from '../containers/NotFoundPage'
 import PersonPage from '../containers/PersonPage'
 import FavoritePage from '../containers/FavoritePage'
+import SearchPage from '../containers/SearchPage'
 
 const routesConfig: IRouterData[] = [
   {
@@ -29,6 +30,11 @@ const routesConfig: IRouterData[] = [
   {
     element: NotFoundPage,
     path: '/not-found',
+    exact: true
+  },
+  {
+    element: SearchPage,
+    path: '/search',
     exact: true
   },
   {

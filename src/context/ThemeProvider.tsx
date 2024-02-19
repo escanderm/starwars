@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react'
 import { changeCssVars } from '../services/changeCssVars'
 
 const ThemeContext = createContext({
-  theme: 'neutral',
+  theme: '',
   change: {}
 })
 
