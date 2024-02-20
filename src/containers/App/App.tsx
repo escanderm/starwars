@@ -10,7 +10,7 @@ const App: FC = () => {
   const { theme } = getLocalStorage('theme')
   const isTheme: any = useTheme()
   useEffect(() => {
-    isTheme.change(theme)
+    isTheme.change(theme ? theme : 'neutral')
   }, [])
 
   return (
