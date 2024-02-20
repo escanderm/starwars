@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import { changeCssVars } from '../services/changeCssVars'
+import { setLocalStorage } from '../utils/localStorage'
 
 const ThemeContext = createContext({
   theme: '',
@@ -18,11 +19,12 @@ type ProviderProps = {
   props?: any
 }
 export const ThemeProvider = ({ children, ...props }: ProviderProps) => {
-  const [theme, setTheme] = useState<string>(THEME_LIGHT)
+  const [theme, setTheme] = useState<string>('')
 
   const change = (name: string) => {
     setTheme(name)
     changeCssVars(name)
+    setLocalStorage('theme', { theme: name })
   }
 
   return (
